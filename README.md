@@ -64,6 +64,20 @@ return [
     */
     
     'responseType' => 'collection',  
+    
+    
+    /*
+    |--------------------------------------------------------------------------
+    | SSL Cerfificate for cURL
+    |--------------------------------------------------------------------------
+    |
+    | Here you may SSL Certificaion verify for cURL if local development, default false .
+    |
+    | Supported: "true", "false"
+    |
+    */
+
+    'skipCurlCertificate' => true,
 ];
 ```
 
