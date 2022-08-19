@@ -12,9 +12,12 @@ class ShiprocketClient implements Client
 
     protected $responseType;
 
+    protected $skipCurlCertificate;
+
     public function __construct()
     {
         $this->responseType = config('shiprocket.responseType');
+        $this->skipCurlCertificate = config('shiprocket.skipCurlCertificate');
     }
 
     /**
@@ -59,8 +62,7 @@ class ShiprocketClient implements Client
     public function post(array $data, $type = "POST")
     {
         $curl = curl_init();
-
-        curl_setopt_array($curl, [
+        $curlOpts = [
             CURLOPT_URL => $this->endpoint,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -71,7 +73,12 @@ class ShiprocketClient implements Client
             CURLOPT_CUSTOMREQUEST => $type,
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => $this->headers,
-        ]);
+        ];
+
+        if($this->skipCurlCertificate)
+            $curlOpts[CURLOPT_SSL_VERIFYPEER] = false;
+
+        curl_setopt_array($curl, $curlOpts);
 
         $response = curl_exec($curl);
 
