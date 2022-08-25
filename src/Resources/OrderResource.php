@@ -35,6 +35,19 @@ class OrderResource extends Resource
 
         return $this->postRequest($endpoint, $order);
     }
+    
+    /**
+     * Create a return request for order
+     *
+     * @param array $order
+     * @return mixed
+     */
+    public function returnOrder(array $order)
+    {
+        $endpoint = 'orders/create/return';
+
+        return $this->postRequest($endpoint, $order);
+    }
 
     /**
      * Cancel an Order
