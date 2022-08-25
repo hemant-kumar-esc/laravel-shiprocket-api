@@ -123,6 +123,9 @@ class ShiprocketClient implements Client
             CURLOPT_HTTPHEADER => $this->headers,
         ]);
 
+        if($this->skipCurlCertificate)
+            $curlOpts[CURLOPT_SSL_VERIFYPEER] = false;
+        
         $response = curl_exec($curl);
 
         if (! $this->isValid($response)) {
