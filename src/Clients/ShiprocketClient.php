@@ -111,7 +111,7 @@ class ShiprocketClient implements Client
     {
         $curl = curl_init();
 
-        curl_setopt_array($curl, [
+        $curlOpts = [
             CURLOPT_URL => $this->endpoint,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -121,11 +121,12 @@ class ShiprocketClient implements Client
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => $this->headers,
-        ]);
+        ];
 
         if($this->skipCurlCertificate)
             $curlOpts[CURLOPT_SSL_VERIFYPEER] = false;
-        
+
+        curl_setopt_array($curl, $curlOpts);
         $response = curl_exec($curl);
 
         if (! $this->isValid($response)) {
