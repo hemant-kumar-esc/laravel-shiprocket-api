@@ -91,4 +91,22 @@ class OrderResource extends Resource
 
         return $this->getRequest($endpoint, $param);
     }
+    
+    
+
+    /**
+     * Use this API to do multiple tasks in one go, namely get single order,
+     * just pass shipmentid and u will get result 
+     * @param array $param
+     * @return mixed
+     */
+    public function getOrder($shipment_id)
+    {
+        $endpoint = 'orders/show';
+        if ($shipment_id) {
+            $endpoint = $endpoint . '/' .  ($shipment_id);
+        }
+
+        return $this->getRequest($endpoint, []);
+    }
 }
